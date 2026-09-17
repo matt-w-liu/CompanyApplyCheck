@@ -1,0 +1,103 @@
+.job-application-highlight {
+  background: #fff59d !important;
+  border: 2px solid #d32f2f !important;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.job-application-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 6px;
+  background: #d32f2f;
+  color: white;
+  font-size: 11px;
+  border-radius: 4px;
+  font-weight: bold;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.jah-copy-job-description {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #1976d2;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.jah-copy-job-description svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.jah-copy-job-description:hover {
+  background: #1565c0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.jah-copy-job-description:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.jah-copy-job-description--success {
+  background: #2e7d32;
+}
+
+.jah-copy-job-description--success:hover {
+  background: #1b5e20;
+}
+
+.jah-copy-job-description--error {
+  background: #c62828;
+}
+
+.jah-copy-job-description--error:hover {
+  background: #b71c1c;
+}
+
+.jah-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483647;
+  max-width: 320px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #323232;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.jah-toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jah-toast--success {
+  background: #2e7d32;
+}

@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "Job Application Highlighter",
+  "version": "1.5.0",
+  "description": "Highlights companies you've already applied to based on your local resume folder structure.",
+  "permissions": ["storage", "alarms", "offscreen"],
+  "host_permissions": [
+    "*://*.indeed.com/*",
+    "*://*.ziprecruiter.com/*",
+    "*://*.builtin.com/*",
+    "*://*.workable.com/*",
+    "*://*.hiring.cafe/*",
+    "*://*.jobright.ai/*",
+    "*://*.glassdoor.com/*",
+    "*://*.linkedin.com/*",
+    "*://*.greenhouse.io/*",
+    "*://*.ashbyhq.com/*",
+    "*://*.rippling.com/*",
+    "*://*.myworkdayjobs.com/*",
+    "*://jobs.lever.co/*",
+    "*://recruiting.paylocity.com/*",
+    "*://*.jobvite.com/*",
+    "*://*.icims.com/*",
+    "*://*.smartrecruiters.com/*",
+    "*://*.applytojob.com/*",
+    "*://*.remoterocketship.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Job Application Highlighter"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.indeed.com/*",
+        "*://*.ziprecruiter.com/*",
+        "*://*.builtin.com/*",
+        "*://*.workable.com/*",
+        "*://*.hiring.cafe/*",
+        "*://*.jobright.ai/*",
+        "*://*.glassdoor.com/*",
+        "*://*.linkedin.com/*",
+        "*://*.greenhouse.io/*",
+        "*://*.ashbyhq.com/*",
+        "*://*.rippling.com/*",
+        "*://*.myworkdayjobs.com/*",
+        "*://jobs.lever.co/*",
+        "*://recruiting.paylocity.com/*",
+        "*://*.jobvite.com/*",
+        "*://*.icims.com/*",
+        "*://*.smartrecruiters.com/*",
+        "*://*.applytojob.com/*",
+        "*://*.remoterocketship.com/*"
+      ],
+      "js": ["site.js", "hotkeys.js", "content.js", "jobDescription.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

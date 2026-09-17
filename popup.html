@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Highlighter</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 320px;
+        margin: 0;
+        padding: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        font-size: 14px;
+        color: #1a1a1a;
+        background: #fafafa;
+      }
+
+      h1 {
+        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .subtitle {
+        margin: 0 0 16px;
+        color: #666;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      #selectBtn {
+        background: #1976d2;
+        color: white;
+      }
+
+      #selectBtn:hover {
+        background: #1565c0;
+      }
+
+      #refreshBtn {
+        margin-top: 8px;
+        background: #e0e0e0;
+        color: #333;
+      }
+
+      #refreshBtn:hover:not(:disabled) {
+        background: #d0d0d0;
+      }
+
+      #refreshBtn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .status {
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 6px;
+        background: white;
+        border: 1px solid #e0e0e0;
+      }
+
+      .status-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+      }
+
+      .status-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .status-label {
+        color: #666;
+      }
+
+      .status-value {
+        font-weight: 500;
+        text-align: right;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .error {
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 6px;
+        background: #ffebee;
+        color: #c62828;
+        font-size: 12px;
+        display: none;
+      }
+
+      .empty-state {
+        margin-top: 8px;
+        color: #888;
+        font-size: 12px;
+        font-style: italic;
+      }
+
+      .section-title {
+        margin: 16px 0 8px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .hotkey-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      #hotkeyInput {
+        flex: 1;
+        padding: 8px 10px;
+        border: 1px solid #cfcfcf;
+        border-radius: 6px;
+        font-size: 13px;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      #hotkeyInput:focus {
+        outline: none;
+        border-color: #1976d2;
+        box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
+      }
+
+      #hotkeyInput.is-recording {
+        border-color: #1976d2;
+        background: #e3f2fd;
+      }
+
+      #clearHotkeyBtn {
+        width: auto;
+        padding: 8px 12px;
+        background: #e0e0e0;
+        color: #333;
+      }
+
+      #clearHotkeyBtn:hover {
+        background: #d0d0d0;
+      }
+
+      .hotkey-help {
+        margin: 6px 0 0;
+        color: #777;
+        font-size: 11px;
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Job Application Highlighter</h1>
+    <p class="subtitle">
+      Select your resume folder. Each subfolder or pdf file name is treated as a company
+      you've already applied to.
+    </p>
+
+    <button id="selectBtn" type="button">Select Resume Directory</button>
+    <button id="refreshBtn" type="button" disabled>Refresh Company List</button>
+
+    <div class="status">
+      <div class="status-row">
+        <span class="status-label">Directory</span>
+        <span class="status-value" id="directoryName">Not selected</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Companies tracked</span>
+        <span class="status-value" id="companyCount">0</span>
+      </div>
+    </div>
+
+    <p class="empty-state" id="emptyHint">
+      No directory selected yet. Click the button above to get started.
+    </p>
+
+    <h2 class="section-title">Copy Job Description Hotkey</h2>
+    <div class="hotkey-row">
+      <input
+        id="hotkeyInput"
+        type="text"
+        readonly
+        value="Ctrl+Shift+J"
+        aria-label="Copy job description hotkey"
+      />
+      <button id="clearHotkeyBtn" type="button">Clear</button>
+    </div>
+    <p class="hotkey-help">
+      Click the field, then press a key combination. Works on supported job sites
+      when the page is focused. Press Escape to cancel, Backspace to reset default.
+    </p>
+
+    <div class="error" id="errorBox"></div>
+
+    <script src="storage.js"></script>
+    <script src="hotkeys.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
