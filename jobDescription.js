@@ -21,7 +21,9 @@ let copyHotkey = null;
 let copyHotkeyListenerReady = false;
 const jobDescriptionExtractors = {
   ziprecruiter() {
-    const element = document.querySelector('section[class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]');
+    const element = document.querySelector(
+      'section[role="region"][class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]'
+    );
     return getTextContent(element);
   },
 
@@ -206,7 +208,9 @@ function extractJobDescription() {
 
 function getJobDescriptionDisplayAnchor() {
   const selectorsBySite = {
-    ziprecruiter: ['section[class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]'],
+    ziprecruiter: [
+      'section[role="region"][class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]',
+    ],
     builtin: ['div[id^="job-post-body-"]'],
     indeed: [".simple-job-description-html"],
     workable: ['div[class^="jobBreakdown__job-breakdown--"]'],
