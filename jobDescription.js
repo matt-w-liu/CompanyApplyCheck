@@ -2,6 +2,7 @@ const COPY_BUTTON_ID = "jah-copy-job-description";
 const COPY_BUTTON_CLASS = "jah-copy-job-description";
 const COPY_BUTTON_LABEL = "Copy Job Description";
 const COPY_DEBOUNCE_MS = 500;
+const JOB_REQUIREMENTS_ID = "jah-job-requirements";
 
 const COPY_ICON_SVG =
   '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
@@ -203,6 +204,107 @@ function extractJobDescription() {
   return jobDescriptionExtractors[site]();
 }
 
+function getJobDescriptionDisplayAnchor() {
+  const selectorsBySite = {
+    ziprecruiter: ['section[class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]'],
+    builtin: ['div[id^="job-post-body-"]'],
+    indeed: [".simple-job-description-html"],
+    workable: ['div[class^="jobBreakdown__job-breakdown--"]'],
+    jobright: [
+      'div[class^="index_jobIntroduction"]',
+      'section[class^="index_sectionContent"]',
+    ],
+    glassdoor: ['div[class^="JobDetails_jobDescription"]'],
+    linkedin: ['div[componentkey^="JobDetails_AboutTheJob"]'],
+    greenhouse: ["div.job__description.body"],
+    ashbyhq: ['div[aria-labelledby="job-overview"]'],
+    rippling: ["div.ATS_htmlPreview"],
+    workday: ['[data-automation-id="job-posting-details"]'],
+    lever: [".posting-page"],
+    paylocity: [".job-preview-details"],
+    jobvite: [".jv-job-detail-description"],
+    icims: [
+      ".iCIMS_JobContent",
+      ".iCIMS_Expandable_Container",
+      '[class*="iCIMS_JobContent"]',
+      '[class*="iCIMS_Expandable_Container"]',
+      '[class*="iCIMS_Expandable"]',
+      "#icims_content",
+    ],
+    smartrecruiters: ['div[itemprop="description"]'],
+    applytojob: ["#job-description"],
+    remoterocketship: ['p[class*="whitespace-pre-line"]'],
+  };
+  const selectors = selectorsBySite[getSiteKey()];
+
+  if (!selectors) {
+    return null;
+  }
+
+  if (getSiteKey() === "icims") {
+    return findBestElementInAllFrames(selectors, getTopAccessibleDocument());
+  }
+
+  return document.querySelector(selectors.join(", "));
+}
+
+function removeJobRequirementsDisplays(exceptCard = null) {
+  for (const doc of getIframeDocuments(getTopAccessibleDocument())) {
+    const card = doc.getElementById(JOB_REQUIREMENTS_ID);
+    if (card && card !== exceptCard) {
+      card.remove();
+    }
+  }
+}
+
+function updateJobRequirementsDisplay(description) {
+  const anchor = getJobDescriptionDisplayAnchor();
+  const requirements = JobRequirementSummary.getJobRequirements(description);
+  const hasRequirements =
+    requirements.clearances.length > 0 || requirements.locations.length > 0;
+
+  if (!anchor || !anchor.parentNode || !hasRequirements) {
+    removeJobRequirementsDisplays();
+    return;
+  }
+
+  const ownerDocument = anchor.ownerDocument;
+  let card = ownerDocument.getElementById(JOB_REQUIREMENTS_ID);
+  if (!card) {
+    card = ownerDocument.createElement("section");
+    card.id = JOB_REQUIREMENTS_ID;
+    card.className = "jah-job-requirements";
+    card.setAttribute("aria-label", "Important job requirements");
+  }
+
+  const signature = JSON.stringify(requirements);
+  if (card.dataset.requirements !== signature) {
+    card.dataset.requirements = signature;
+    card.replaceChildren();
+
+    const title = ownerDocument.createElement("strong");
+    title.className = "jah-job-requirements__title";
+    title.textContent = "Important job requirements";
+    card.appendChild(title);
+
+    if (requirements.clearances.length) {
+      const clearance = ownerDocument.createElement("div");
+      clearance.textContent = `Clearance required: ${requirements.clearances.join(", ")}`;
+      card.appendChild(clearance);
+    }
+    if (requirements.locations.length) {
+      const location = ownerDocument.createElement("div");
+      location.textContent = `Location required: ${requirements.locations.join("; ")}`;
+      card.appendChild(location);
+    }
+  }
+
+  if (card.nextSibling !== anchor) {
+    anchor.parentNode.insertBefore(card, anchor);
+  }
+  removeJobRequirementsDisplays(card);
+}
+
 function getUiDocument() {
   return getTopAccessibleDocument();
 }
@@ -297,9 +399,17 @@ async function handleCopyClick() {
   }
 
   try {
-    await copyTextToClipboard(description);
+    const prioritizedDescription = JobRequirementSummary.prependJobRequirements(description);
+    await copyTextToClipboard(prioritizedDescription);
     showCopyFeedback("Copied!");
-    showToast("Job description copied to clipboard");
+    const requirements = JobRequirementSummary.getJobRequirements(description);
+    const hasPrioritizedRequirements =
+      requirements.clearances.length > 0 || requirements.locations.length > 0;
+    showToast(
+      hasPrioritizedRequirements
+        ? "Job description copied with requirements at the top"
+        : "Job description copied to clipboard"
+    );
   } catch {
     showCopyFeedback("Copy failed", true);
   }
@@ -317,6 +427,7 @@ function updateCopyButtonVisibility() {
   const description = extractJobDescription();
   const button = ensureCopyButton();
   button.style.display = description ? "flex" : "none";
+  updateJobRequirementsDisplay(description);
 }
 
 function scheduleCopyButtonUpdate() {

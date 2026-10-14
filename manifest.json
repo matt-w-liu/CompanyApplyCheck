@@ -55,7 +55,7 @@
         "*://*.applytojob.com/*",
         "*://*.remoterocketship.com/*"
       ],
-      "js": ["site.js", "hotkeys.js", "content.js", "jobDescription.js"],
+      "js": ["site.js", "hotkeys.js", "content.js", "jobRequirements.js", "jobDescription.js"],
       "css": ["styles.css"],
       "run_at": "document_idle",
       "all_frames": true
