@@ -289,11 +289,15 @@ function updateJobRequirementsDisplay(description) {
 
     if (requirements.clearances.length) {
       const clearance = ownerDocument.createElement("div");
+      clearance.className =
+        "jah-job-requirements__flag jah-job-requirements__flag--clearance";
       clearance.textContent = `Clearance required: ${requirements.clearances.join(", ")}`;
       card.appendChild(clearance);
     }
     if (requirements.locations.length) {
       const location = ownerDocument.createElement("div");
+      location.className =
+        "jah-job-requirements__flag jah-job-requirements__flag--location";
       location.textContent = `Location required: ${requirements.locations.join("; ")}`;
       card.appendChild(location);
     }

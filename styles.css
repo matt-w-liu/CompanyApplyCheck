@@ -1,125 +1,262 @@
+/* High-visibility Apple-inspired light UI for supported job sites. */
 .job-application-highlight {
-  background: #fff59d !important;
-  border: 2px solid #d32f2f !important;
-  border-radius: 4px;
-  padding: 2px 4px;
+  padding: 3px 7px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #007aff !important;
+  color: #ffffff !important;
+  outline: 2px solid rgba(0, 122, 255, 0.22) !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 4px 12px rgba(0, 122, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  font-weight: 650 !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .job-application-badge {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 2px 6px;
-  background: #d32f2f;
-  color: white;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  margin-left: 9px;
+  padding: 4px 10px 4px 7px;
+  border: 1px solid #209a40;
+  border-radius: 999px;
+  background: #34c759;
+  color: #ffffff;
+  box-shadow:
+    0 4px 10px rgba(52, 199, 89, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   font-size: 11px;
-  border-radius: 4px;
-  font-weight: bold;
-  vertical-align: middle;
+  font-weight: 650;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  vertical-align: 2px;
   white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.job-application-badge::before {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #209a40;
+  content: "✓";
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1;
 }
 
 .jah-job-requirements {
   box-sizing: border-box;
   width: 100%;
-  margin: 0 0 16px;
-  padding: 14px 16px;
-  border: 1px solid #ef9a9a;
-  border-left: 5px solid #c62828;
-  border-radius: 8px;
-  background: #fff8e1;
-  color: #202124;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  margin: 0 0 20px;
+  padding: 17px;
+  border: 1px solid rgba(0, 122, 255, 0.24);
+  border-top: 4px solid #007aff;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #1d1d1f;
+  box-shadow:
+    0 14px 34px rgba(0, 71, 171, 0.14),
+    0 3px 9px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
 }
 
 .jah-job-requirements__title {
-  display: block;
-  margin-bottom: 4px;
-  color: #b71c1c;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 13px;
+  color: #1d1d1f;
   font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.jah-job-requirements__title::before {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: 0 0 31px;
+  place-items: center;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #2997ff, #0071e3);
+  color: #ffffff;
+  content: "!";
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow:
+    0 5px 11px rgba(0, 122, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.jah-job-requirements__flag {
+  position: relative;
+  min-height: 44px;
+  margin-top: 9px;
+  padding: 12px 13px 12px 48px;
+  border: 1px solid;
+  border-radius: 12px;
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.jah-job-requirements__flag::before {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 800;
+  line-height: 1;
+  transform: translateY(-50%);
+  box-shadow:
+    0 3px 7px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.jah-job-requirements__flag--clearance {
+  border-color: rgba(220, 112, 0, 0.34);
+  border-left: 4px solid #ff9500;
+  background: #fff7e8;
+}
+
+.jah-job-requirements__flag--clearance::before {
+  background: linear-gradient(145deg, #ffad32, #f18400);
+  content: "◆";
+  font-size: 12px;
+}
+
+.jah-job-requirements__flag--location {
+  border-color: rgba(0, 102, 204, 0.28);
+  border-left: 4px solid #007aff;
+  background: #edf6ff;
+}
+
+.jah-job-requirements__flag--location::before {
+  background: linear-gradient(145deg, #2997ff, #006edb);
+  content: "●";
+  font-size: 10px;
 }
 
 .jah-copy-job-description {
   position: fixed;
-  left: 24px;
-  bottom: 24px;
+  left: 22px;
+  bottom: 22px;
   z-index: 2147483646;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: #1976d2;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 15px;
+  background: #007aff;
   color: #ffffff;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow:
+    0 12px 27px rgba(0, 122, 255, 0.34),
+    0 3px 8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
 .jah-copy-job-description svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   fill: currentColor;
   flex-shrink: 0;
 }
 
 .jah-copy-job-description:hover {
-  background: #1565c0;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: #006edb;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 16px 32px rgba(0, 122, 255, 0.38),
+    0 4px 10px rgba(0, 0, 0, 0.13);
+}
+
+.jah-copy-job-description:focus-visible {
+  outline: 4px solid rgba(0, 122, 255, 0.28);
+  outline-offset: 3px;
 }
 
 .jah-copy-job-description:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(0) scale(0.96);
 }
 
-.jah-copy-job-description--success {
-  background: #2e7d32;
-}
-
+.jah-copy-job-description--success,
 .jah-copy-job-description--success:hover {
-  background: #1b5e20;
+  background: #34c759;
+  box-shadow: 0 11px 26px rgba(52, 199, 89, 0.34);
 }
 
-.jah-copy-job-description--error {
-  background: #c62828;
-}
-
+.jah-copy-job-description--error,
 .jah-copy-job-description--error:hover {
-  background: #b71c1c;
+  background: #ff3b30;
+  box-shadow: 0 11px 26px rgba(255, 59, 48, 0.32);
 }
 
 .jah-toast {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: 22px;
+  bottom: 22px;
   z-index: 2147483647;
-  max-width: 320px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  background: #323232;
+  max-width: 340px;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(38, 38, 41, 0.94);
   color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1.4;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateY(10px) scale(0.98);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  transition: opacity 180ms ease, transform 180ms ease;
   pointer-events: none;
 }
 
 .jah-toast--visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .jah-toast--success {
-  background: #2e7d32;
+  background: rgba(38, 164, 70, 0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jah-copy-job-description,
+  .jah-toast {
+    transition: none;
+  }
 }

@@ -194,11 +194,12 @@ function formatAppliedDate(timestamp) {
     return "Applied";
   }
 
-  return new Date(timestamp).toLocaleDateString(undefined, {
+  const date = new Date(timestamp).toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
+  return `Applied · ${date}`;
 }
 
 async function loadCompanyDirectory() {
