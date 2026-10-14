@@ -20,7 +20,7 @@ let copyHotkey = null;
 let copyHotkeyListenerReady = false;
 const jobDescriptionExtractors = {
   ziprecruiter() {
-    const element = document.querySelector('[data-testid="job-details-scroll-container"]');
+    const element = document.querySelector('section[class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]');
     return getTextContent(element);
   },
 

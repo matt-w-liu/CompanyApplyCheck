@@ -30,7 +30,7 @@ function getCurrentSite() {
 const extractors = {
   ziprecruiter() {
     const results = [];
-    const elements = document.querySelectorAll('a[data-testid="job-card-company"]');
+    const elements = document.querySelectorAll('span[class="html-span x1717udv x1hl2dhg x16tdsg8 x1vvkbs x1ghz6dp x1hfu8rx x1mzt3pk x1fj9vlw x1uw6pvb xeh1zjk xvtcxll xzeaken xsh4ujf"]');
 
     for (const element of elements) {
       const companyName = element.textContent;
