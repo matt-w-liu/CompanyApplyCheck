@@ -21,12 +21,12 @@
   gap: 5px;
   margin-left: 9px;
   padding: 4px 10px 4px 7px;
-  border: 1px solid #209a40;
+  border: 1px solid #d70015;
   border-radius: 999px;
-  background: #34c759;
+  background: #ff3b30;
   color: #ffffff;
   box-shadow:
-    0 4px 10px rgba(52, 199, 89, 0.24),
+    0 4px 10px rgba(255, 59, 48, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.32);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
   font-size: 11px;
@@ -45,7 +45,7 @@
   place-items: center;
   border-radius: 50%;
   background: #ffffff;
-  color: #209a40;
+  color: #d70015;
   content: "✓";
   font-size: 11px;
   font-weight: 850;
