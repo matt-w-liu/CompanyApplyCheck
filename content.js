@@ -90,7 +90,7 @@ const extractors = {
   hiringCafe() {
     const results = [];
     const companySpans = document.querySelectorAll(
-      'span[class*="line-clamp-3"] span.font-bold'
+      'span.line-clamp-3.font-light > span.font-bold'
     );
 
     for (const element of companySpans) {
@@ -214,6 +214,7 @@ async function loadCompanyDirectory() {
 
 function extractCompanies() {
   const site = getCurrentSite();
+
   if (!site || !extractors[site]) {
     return [];
   }

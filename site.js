@@ -5,7 +5,7 @@ function getSiteKey() {
   if (host.includes("builtin.com")) return "builtin";
   if (host.includes("indeed.com")) return "indeed";
   if (host.includes("workable.com")) return "workable";
-  if (host.includes("hiring.cafe")) return "hiringCafe";
+  if (host.includes("hiringcafe.com")) return "hiringCafe";
   if (host.includes("jobright.ai")) return "jobright";
   if (host.includes("glassdoor.com")) return "glassdoor";
   if (host.includes("linkedin.com")) return "linkedin";
