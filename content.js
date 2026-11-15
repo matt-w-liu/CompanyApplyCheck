@@ -30,7 +30,7 @@ function getCurrentSite() {
 const extractors = {
   ziprecruiter() {
     const results = [];
-    const elements = document.querySelectorAll('span[class="html-span x1717udv x1hl2dhg x16tdsg8 x1vvkbs x1ghz6dp x1hfu8rx x1mzt3pk x1fj9vlw x1uw6pvb xeh1zjk xvtcxll xzeaken xsh4ujf"]');
+    const elements = document.querySelectorAll('span[class="html-span x1717udv x1hl2dhg x16tdsg8 x1vvkbs x1ghz6dp x1it7sx2 x1mzt3pk x1fj9vlw x15p5ryx x107ccmp x1a7kp97 x1bnl8zp x16b8s4u"]');
 
     for (const element of elements) {
       const companyName = element.textContent;
@@ -202,13 +202,38 @@ function formatAppliedDate(timestamp) {
   return `Applied · ${date}`;
 }
 
+// When the extension is reloaded/updated, content scripts already injected
+// into open tabs are orphaned: any chrome.* call then throws "Extension
+// context invalidated" synchronously. chrome.runtime.id becomes undefined
+// in that state, so use it as the liveness check.
+function isExtensionContextValid() {
+  try {
+    return Boolean(chrome.runtime && chrome.runtime.id);
+  } catch {
+    return false;
+  }
+}
+
 async function loadCompanyDirectory() {
   return new Promise((resolve) => {
-    chrome.storage.local.get(["companyNames", "companyDates"], (result) => {
-      companySet = new Set(result.companyNames || []);
-      companyDates = result.companyDates || {};
+    if (!isExtensionContextValid()) {
       resolve(companySet);
-    });
+      return;
+    }
+
+    try {
+      chrome.storage.local.get(["companyNames", "companyDates"], (result) => {
+        if (chrome.runtime.lastError || !result) {
+          resolve(companySet);
+          return;
+        }
+        companySet = new Set(result.companyNames || []);
+        companyDates = result.companyDates || {};
+        resolve(companySet);
+      });
+    } catch {
+      resolve(companySet);
+    }
   });
 }
 
@@ -407,12 +432,25 @@ function rescanAllPages() {
   runScan();
 }
 
+let directorySyncInterval = null;
+
 function requestDirectorySync() {
-  chrome.runtime.sendMessage({ type: "REQUEST_DIRECTORY_SYNC" }).catch(() => { });
+  if (!isExtensionContextValid()) {
+    // Orphaned script: stop polling the background, it will never answer.
+    clearInterval(directorySyncInterval);
+    directorySyncInterval = null;
+    return;
+  }
+
+  try {
+    chrome.runtime.sendMessage({ type: "REQUEST_DIRECTORY_SYNC" }).catch(() => { });
+  } catch {
+    // Context was invalidated between the check and the call.
+  }
 }
 
 function setupDirectorySync() {
-  setInterval(requestDirectorySync, DIRECTORY_SYNC_MS);
+  directorySyncInterval = setInterval(requestDirectorySync, DIRECTORY_SYNC_MS);
 }
 
 // Belt-and-suspenders full rescan: catches any case where the mutation

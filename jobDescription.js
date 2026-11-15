@@ -22,7 +22,7 @@ let copyHotkeyListenerReady = false;
 const jobDescriptionExtractors = {
   ziprecruiter() {
     const element = document.querySelector(
-      'section[role="region"][class="x1ghz6dp x1717udv x78zum5 xdt5ytf xsjsy3n"]'
+      'section[role="region"][class="x1ghz6dp x1717udv x78zum5 xdt5ytf xucx4vx"]'
     );
     return getTextContent(element);
   },
