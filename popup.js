@@ -64,30 +64,17 @@ function setupStorageListener() {
   });
 }
 
-async function handleDirectorySelected(handle) {
-  const granted = await ensureDirectoryPermission(handle);
-  if (!granted) {
-    throw new Error("Permission to read the selected directory was denied.");
-  }
-
-  await saveDirectoryHandle(handle);
-  const { normalized } = await syncCompanyNamesFromHandle(handle);
-  updateUI({ directoryName: handle.name, companyCount: normalized.length });
-  await notifyTabsUpdated();
-  await startDirectoryWatch();
-}
-
+// The directory picker runs in its own tab (picker.html): the action popup is
+// closed by Chrome when the native folder dialog or the "view files"
+// permission prompt takes focus, which silently aborts the selection.
 selectBtn.addEventListener("click", async () => {
   clearError();
 
   try {
-    const handle = await window.showDirectoryPicker({ mode: "read" });
-    await handleDirectorySelected(handle);
+    await chrome.tabs.create({ url: chrome.runtime.getURL("picker.html") });
+    window.close();
   } catch (error) {
-    if (error.name === "AbortError") {
-      return;
-    }
-    showError(error.message || "Failed to select directory.");
+    showError(error.message || "Failed to open directory picker.");
   }
 });
 
